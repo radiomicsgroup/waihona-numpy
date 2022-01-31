@@ -8,7 +8,7 @@ setup(
   author = 'Camilo A. Monreal',                                                           # Type in your name
   author_email = 'camilomonreal@vhio.net',                                                # Type in your E-Mail
   url = 'https://github.com/radiomicsvhio/waihona-numpy',                                 # Provide either the link to your github or to your website
-  download_url = 'https://github.com/radiomicsvhio/waihona-numpy/archive/v0.0.1.tar.gz',    # I explain this later on
+  download_url = 'https://github.com/radiomicsvhio/waihona-numpy/releases/download/v0.0.1/waihonanumpy-v0.0.1.tar.gz',    # I explain this later on
   keywords = ['redis', 'numpy', 'store'],                                                 # Keywords that define your package best
   install_requires=[                                                                      # I get to this in a second
           'redis',
