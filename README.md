@@ -1,2 +1,2 @@
-# waihona-numpy
-Store and retreive Numpy Array data.
+# waihonanumpy
+Store and retrieve Numpy Array data.
