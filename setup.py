@@ -1,15 +1,15 @@
 from distutils.core import setup
 
-with open("README.md", "r", encoding="utf-8") as fh:
-    long_description = fh.read()
+#with open("README.md", "r", encoding="utf-8") as fh:
+#    long_description = fh.read()
 
 setup(
   name = 'waihonanumpy',                                                                  # How you named your package folder (MyLib)
   packages = ['waihonanumpy'],                                                            # Chose the same as "name"
-  version = 'v0.0.3',                                                                     # Start with a small number and increase it with every change you make
+  version = 'v0.0.4.1',                                                                   # Start with a small number and increase it with every change you make
   license='cc-by-sa-4.0',                                                                 # Chose a license from here: https://help.github.com/articles/licensing-a-repository
   description = 'Store and retreive data in Redis.',                                      # Give a short description about your library
-  long_description=long_description,                                                      # Long Description
+  long_description='Store and retrieve Numpy Array data.',                                # Long Description
   long_description_content_type="text/markdown",                                          # Content Type
   author = 'Camilo A. Monreal',                                                           # Type in your name
   author_email = 'camilomonreal@vhio.net',                                                # Type in your E-Mail

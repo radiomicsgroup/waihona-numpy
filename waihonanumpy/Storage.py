@@ -41,18 +41,20 @@ class RedisStorage(object):
             for keybatch in self.redis_db.scan_iter(params_key):
                 if keybatch is not None:
                     value = self.redis_db.get(keybatch)
-                    result.append(msgpack.unpackb(value, object_hook=m.decode))
+                    result.append(msgpack.unpackb(value, object_hook=m.decode)) # 
             return result
         else:
             # single item
             value = self.redis_db.get(params_key)
             if value is None:
                 return None
-            return msgpack.unpackb(value, object_hook=m.decode)
+            return msgpack.unpackb(value, object_hook=m.decode) # 
 
     def __setitem__(self, item, value):
         if not self.is_connected:
             raise Exception("Not connected")
+        if str(type(value))!="<class 'numpy.ndarray'>":
+            raise Exception("Value is not an numpy.ndarray object")
         params_list = list(item)
         params_length = len(params_list)
         params_key = self.keysplit.join(params_list)
@@ -60,12 +62,10 @@ class RedisStorage(object):
             # iteration data
             for keybatch in self.redis_db.scan_iter(params_key):
                 if keybatch is not None:
-                    self.redis_db.set(keybatch, msgpack.packb(
-                        value, default=m.encode))
+                    self.redis_db.set(keybatch, msgpack.packb(value, default=m.encode)) # 
         else:
             # single item
-            self.redis_db.set(params_key, msgpack.packb(
-                value, default=m.encode))
+            self.redis_db.set(params_key, msgpack.packb(value, default=m.encode)) # 
 
     def __delitem__(self, item):
         if not self.is_connected:
@@ -80,7 +80,7 @@ class RedisStorage(object):
                     self.redis_db.delete(keybatch)
         else:
             # single item
-            self.redis_db.sdeleteet(params_key)
+            self.redis_db.delete(params_key)
 
     def contains_wildcard(self, cad):
         '''Check if cad have wildcard * '''
