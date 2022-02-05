@@ -1,8 +1,8 @@
 from distutils.core import setup
 
 m_long_description=""
-with open("README.HTML", "r", encoding="utf-8") as fh:
-    m_long_description = fh.read()
+#with open("README.HTML", "r", encoding="utf-8") as fh:
+#    m_long_description = fh.read()
 
 setup(
   name = 'waihonanumpy',                                                                  # How you named your package folder (MyLib)
@@ -10,11 +10,11 @@ setup(
   package_data = {
     'README': ['*'], 
   },
-  version = 'v0.0.4.4',                                                                   # Start with a small number and increase it with every change you make
+  version = 'v0.0.4.7',                                                                   # Start with a small number and increase it with every change you make
   license='cc-by-sa-4.0',                                                                 # Chose a license from here: https://help.github.com/articles/licensing-a-repository
   description = 'Store and retreive data in Redis.',                                      # Give a short description about your library
   long_description=m_long_description,                                                    # Long Description
-  long_description_content_type="text/markdown",                                          # Content Type
+  #long_description_content_type="text/markdown",                                          # Content Type
   author = 'Camilo A. Monreal',                                                           # Type in your name
   author_email = 'camilomonreal@vhio.net',                                                # Type in your E-Mail
   url = 'https://github.com/radiomicsvhio/waihona-numpy',                                 # Provide either the link to your github or to your website

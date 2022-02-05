@@ -38,12 +38,24 @@ class RedisStorage(object):
         """String Representation of the object
 
         Returns:
-            [str]: [description]
+            [str]: Str representation of the object
         """
         if self.is_connected:
             return 'RedisStorage Host {} Port {} Db {} Password *******'.format(self.host, self.port, self.db)
         else:
             return "RedisStorage Not connected"
+    
+    def CleanDatabase(self, password, alldatabases = False):
+        """Clear the redis database
+
+        Args:
+            password ([str]): Database password
+            alldatabases (bool, optional): If true delete all databases in Redis . Defaults to False.
+        """
+        if self.password == password:
+            self.redis_db.flushdb()
+            if alldatabases:
+                self.redis_db.flushall()            
 
     def __getitem__(self, item):
         """Get values in the form obj["k1","k2","k3",..."kn"]
@@ -60,7 +72,7 @@ class RedisStorage(object):
         if not self.is_connected:
             raise Exception("Not connected")
         params_list = list(item)
-        params_length = len(params_list)
+        #params_length = len(params_list)
         params_key = self.keysplit.join(params_list)
         if self.contains_wildcard(params_key):
             # iteration data
@@ -68,14 +80,17 @@ class RedisStorage(object):
             for keybatch in self.redis_db.scan_iter(params_key):
                 if keybatch is not None:
                     value = self.redis_db.get(keybatch)
-                    result.append(msgpack.unpackb(value, object_hook=m.decode)) # 
+                    key_list = (keybatch.decode("utf-8")).split(self.keysplit)
+                    key = tuple(key_list) 
+                    result.append( (key, msgpack.unpackb(value, object_hook=m.decode)) ) # 
             return result
         else:
             # single item
+            key = item
             value = self.redis_db.get(params_key)
             if value is None:
                 return None
-            return msgpack.unpackb(value, object_hook=m.decode) # 
+            return (key, msgpack.unpackb(value, object_hook=m.decode)) # 
 
     def __setitem__(self, item, value):
         """Store the value in the form obj["k1","k2","k3",..."kn"]= value
@@ -93,7 +108,7 @@ class RedisStorage(object):
         if str(type(value))!="<class 'numpy.ndarray'>":
             raise Exception("Value is not an numpy.ndarray object")
         params_list = list(item)
-        params_length = len(params_list)
+        #params_length = len(params_list)
         params_key = self.keysplit.join(params_list)
         if self.contains_wildcard(params_key):
             # iteration data
@@ -116,7 +131,7 @@ class RedisStorage(object):
         if not self.is_connected:
             raise Exception("Not connected")
         params_list = list(item)
-        params_length = len(params_list)
+        #params_length = len(params_list)
         params_key = self.keysplit.join(params_list)
         if self.contains_wildcard(params_key):
             # iteration data

@@ -10,9 +10,9 @@ ii = np.arange(21).reshape(3, 7)
 
 r["p1","r1"] = a
 
-a_prime = r["p1","r1"] 
+a_prime_key, a_prime_value = r["p1","r1"] 
 
-if (a == a_prime).all():
+if (a == a_prime_value).all():
     print("ok !")
 else:
     print("Error")
